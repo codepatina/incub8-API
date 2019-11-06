@@ -23,6 +23,7 @@ class UserRegister(Resource):
     )
     parser.add_argument('email', type=str, required=True, help="Email cannot be blank")
     parser.add_argument('bio', type=str, required=True, help="Please fill out bio")
+    parser.add_argument('theme_id', type=int, required=True, help="Please select preferred Theme")
 
     def post(self):
         data = UserRegister.parser.parse_args()

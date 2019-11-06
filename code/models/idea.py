@@ -1,4 +1,6 @@
 from db import db
+from models.user import UserModel
+from flask import jsonify
 
 class IdeaModel(db.Model):
 
@@ -11,6 +13,8 @@ class IdeaModel(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('UserModel')
+    contributorideas = db.relationship('ContributorIdeaModel', lazy='dynamic')
+
 
     def __init__(self, title, tagline, description, user_id):
         self.title =  title
@@ -23,7 +27,9 @@ class IdeaModel(db.Model):
             'id': self.id,
             'tagline': self.tagline,
             'description': self.description,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'contributors': [contributoridea.json() for contributoridea in self.contributorideas.all()]
+
         }
 
     @classmethod

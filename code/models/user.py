@@ -13,14 +13,19 @@ class UserModel(db.Model):
     avatar = db.Column(db.String)
 
     ideas = db.relationship('IdeaModel', lazy='dynamic')
+    contributorideas = db.relationship('ContributorIdeaModel', lazy='dynamic')
+    externallinks = db.relationship('ExternalLinkModel', lazy='dynamic')
+    theme_id = db.Column(db.Integer, db.ForeignKey('themes.id'))
+    theme = db.relationship('ThemeModel')
 
-    def __init__(self, username, password, first_name, last_name, email, bio):
+    def __init__(self, username, password, first_name, last_name, email, bio, theme_id):
         self.username = username
         self.password = password
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.bio = bio
+        self.bio = bio,
+        self.theme_id = theme_id
 
     def json(self):
         return {
@@ -30,7 +35,10 @@ class UserModel(db.Model):
             'last name': self.last_name,
             'email': self.email,
             'bio': self.bio,
-            'ideas': [idea.json() for idea in self.ideas.all()]
+            'theme_id': self.theme_id,
+            'founded_ideas': [idea.json() for idea in self.ideas.all()],
+            'contributed_to': [contributoridea.json() for contributoridea in self.contributorideas.all()],
+            'external_links': [external_link.json() for external_link in self.externallinks.all()]
         }
 
     def save_to_db(self):
