@@ -9,8 +9,8 @@ from ma import ma
 import os
 
 from security import authenticate, identity
-from resources.user import UserRegister
-
+from resources.user import UserRegister, User
+from resources.idea import IdeaCreator, Idea
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/incub8dev')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -26,6 +26,9 @@ def create_tables():
 
 jwt = JWT(app, authenticate, identity, )
 api.add_resource(UserRegister, '/register')
+api.add_resource(User, '/user/<string:username>')
+api.add_resource(IdeaCreator, '/idea')
+
 @jwt.auth_response_handler
 def customized_response_handler(access_token, identity):
     return jsonify({

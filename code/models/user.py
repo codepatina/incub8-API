@@ -12,6 +12,8 @@ class UserModel(db.Model):
     bio = db.Column(db.String(500))
     avatar = db.Column(db.String)
 
+    ideas = db.relationship('IdeaModel', lazy='dynamic')
+
     def __init__(self, username, password, first_name, last_name, email, bio):
         self.username = username
         self.password = password
@@ -27,7 +29,8 @@ class UserModel(db.Model):
             'first name': self.first_name,
             'last name': self.last_name,
             'email': self.email,
-            'bio': self.bio
+            'bio': self.bio,
+            'ideas': [idea.json() for idea in self.ideas.all()]
         }
 
     def save_to_db(self):
