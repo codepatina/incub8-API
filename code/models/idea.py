@@ -27,7 +27,7 @@ class IdeaModel(db.Model):
             'id': self.id,
             'tagline': self.tagline,
             'description': self.description,
-            'user_id': self.user_id,
+            'user': jsonify(dict(UserModel.find_by_id(self.user_id))),
             'contributors': [contributoridea.json() for contributoridea in self.contributorideas.all()]
 
         }
