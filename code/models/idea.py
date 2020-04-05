@@ -1,4 +1,5 @@
 from db import db
+from ma import ma
 from models.user import UserModel
 from flask import jsonify
 
@@ -27,7 +28,7 @@ class IdeaModel(db.Model):
             'id': self.id,
             'tagline': self.tagline,
             'description': self.description,
-            'user': jsonify(dict(UserModel.find_by_id(self.user_id))),
+            'user': self.user_id,
             'contributors': [contributoridea.json() for contributoridea in self.contributorideas.all()]
 
         }
@@ -43,3 +44,5 @@ class IdeaModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
+
+

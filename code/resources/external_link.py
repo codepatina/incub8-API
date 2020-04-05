@@ -17,4 +17,3 @@ class ExternalLinkManager(Resource):
         link.save_to_db()
         return {"message": "Link created for User"}
 
-

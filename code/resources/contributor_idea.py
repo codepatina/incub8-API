@@ -15,3 +15,7 @@ class ContributorIdea(Resource):
         contributoridea.save_to_db()
 
         return {"message": "Contributor created successfully"}
+
+class ContributorList(Resource):
+    def get(self):
+        return {"contributors": list(map(lambda contributor: contributor.json(), ContributorIdeaModel.query.all()))}

@@ -1,4 +1,5 @@
 from db import db
+from ma import ma
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserModel(db.Model):
@@ -64,4 +65,5 @@ class UserModel(db.Model):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
+
 

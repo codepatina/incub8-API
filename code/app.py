@@ -9,9 +9,9 @@ from ma import ma
 import os
 
 from security import authenticate, identity
-from resources.user import UserRegister, User
-from resources.idea import IdeaCreator, Idea
-from resources.contributor_idea import ContributorIdea
+from resources.user import UserRegister, User, UserList
+from resources.idea import IdeaCreator, Idea, IdeaList
+from resources.contributor_idea import ContributorIdea, ContributorList
 from resources.external_link import ExternalLinkManager
 from resources.theme import ThemeManager
 app = Flask(__name__)
@@ -30,8 +30,11 @@ def create_tables():
 jwt = JWT(app, authenticate, identity, )
 api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/user/<string:username>')
+api.add_resource(UserList, '/users')
 api.add_resource(IdeaCreator, '/idea')
+api.add_resource(IdeaList, '/ideas')
 api.add_resource(ContributorIdea, '/contributor')
+api.add_resource(ContributorList, '/contributors')
 api.add_resource(ExternalLinkManager, '/link')
 api.add_resource(ThemeManager, '/theme')
 @jwt.auth_response_handler

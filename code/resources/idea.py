@@ -29,3 +29,9 @@ class Idea(Resource):
             return idea.json(), 201
 
         return {"message": "Idea not found"}, 404
+
+class IdeaList(Resource):
+   def get(self):
+        return {'ideas': list(map(lambda idea: idea.json(), IdeaModel.query.all()))}
+
+

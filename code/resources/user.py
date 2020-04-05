@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.user import UserModel
-from flask_jwt import jwt_required
+from flask_jwt import jwt_required, current_identity
 
 class UserRegister(Resource):
     parser = reqparse.RequestParser()
@@ -38,11 +38,13 @@ class UserRegister(Resource):
         return {"message": "User created successfully"}, 201
 
 class User(Resource):
-
     def get(self, username):
         user = UserModel.find_by_username(username)
-
         if user:
             return user.json(), 201
             
         return {"message": "User not found"}, 404
+
+class UserList(Resource):
+     def get(self):
+        return {'users': list(map(lambda user: user.json(), UserModel.query.all()))}
