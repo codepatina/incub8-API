@@ -7,8 +7,7 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
     password = db.Column(db.String)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
+    name = db.Column(db.String)
     email = db.Column(db.String)
     bio = db.Column(db.String(500))
     avatar = db.Column(db.String)
@@ -16,27 +15,21 @@ class UserModel(db.Model):
     ideas = db.relationship('IdeaModel', lazy='dynamic')
     contributorideas = db.relationship('ContributorIdeaModel', lazy='dynamic')
     externallinks = db.relationship('ExternalLinkModel', lazy='dynamic')
-    theme_id = db.Column(db.Integer, db.ForeignKey('themes.id'))
-    theme = db.relationship('ThemeModel')
 
-    def __init__(self, username, password, first_name, last_name, email, bio, theme_id):
+    def __init__(self, username, password, name, email, bio):
         self.username = username
         self.password = password
-        self.first_name = first_name
-        self.last_name = last_name
+        self.name = name
         self.email = email
-        self.bio = bio,
-        self.theme_id = theme_id
+        self.bio = bio
 
     def json(self):
         return {
             'id': self.id,
             'username': self.username,
-            'first name': self.first_name,
-            'last name': self.last_name,
+            'name': self.name,
             'email': self.email,
             'bio': self.bio,
-            'theme_id': self.theme_id,
             'founded_ideas': [idea.json() for idea in self.ideas.all()],
             'contributed_to': [contributoridea.json() for contributoridea in self.contributorideas.all()],
             'external_links': [external_link.json() for external_link in self.externallinks.all()]
@@ -67,3 +60,6 @@ class UserModel(db.Model):
         return cls.query.filter_by(id=_id).first()
 
 
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("username", "first_name", "last_name", "email", "phone_number", "bio")

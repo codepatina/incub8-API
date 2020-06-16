@@ -13,7 +13,6 @@ from resources.user import UserRegister, User, UserList
 from resources.idea import IdeaCreator, Idea, IdeaList
 from resources.contributor_idea import ContributorIdea, ContributorList
 from resources.external_link import ExternalLinkManager
-from resources.theme import ThemeManager
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/incub8dev')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,7 +35,6 @@ api.add_resource(IdeaList, '/ideas')
 api.add_resource(ContributorIdea, '/contributor')
 api.add_resource(ContributorList, '/contributors')
 api.add_resource(ExternalLinkManager, '/link')
-api.add_resource(ThemeManager, '/theme')
 @jwt.auth_response_handler
 def customized_response_handler(access_token, identity):
     return jsonify({
