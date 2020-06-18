@@ -7,6 +7,7 @@ class ExternalLinkManager(Resource):
     parser.add_argument('icon', type=str, required=True, help="Icon required")
     parser.add_argument('user_id', type=int, required=True, help="External link must belong to user, please insert User id")
 
+
     def post(self):
         data = ExternalLinkManager.parser.parse_args()
 
