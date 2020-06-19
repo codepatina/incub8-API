@@ -19,6 +19,7 @@ marshmallow-sqlalchemy = "*"
 psycopg2="*"
 flask-mail = "*"
 python-dotenv = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
