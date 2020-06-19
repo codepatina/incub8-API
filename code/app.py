@@ -36,7 +36,7 @@ api.add_resource(IdeaList, '/ideas')
 api.add_resource(ContributorIdea, '/contributor')
 api.add_resource(ContributorList, '/contributors')
 api.add_resource(ExternalLinkManager, '/link')
-api.add_resource(LinkParser, '/link_parser')
+api.add_resource(LinkParser, '/link_parser/')
 @jwt.auth_response_handler
 def customized_response_handler(access_token, identity):
     return jsonify({
